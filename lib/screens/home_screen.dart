@@ -41,16 +41,42 @@ class _HomeScreenState extends State<HomeScreen> {
                 tabs: [
                   IconButton(onPressed: (){},
                       icon: Icon(Icons.camera_enhance)),
-                  Text('chars'),
+                  Text('chats'),
                   Text('status'),
                   Text('calls'),
             ]),
           ),
           body: TabBarView(children: [
             Text('Camera'),
-            Text('chats'),
+            ListView.builder(
+              itemCount: 100,
+                itemBuilder: (context, index){
+              return ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: NetworkImage('https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg'),
+                ),
+                title: Text('john khan'),
+                subtitle: Text('where is he'),
+                trailing: Text('6:40'),
+              );
+            }),
+
             Text('Status'),
-            Text('Call'),
+            ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index){
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage('https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg'),
+                    ),
+                    title: Text('john khan'),
+                    subtitle: Align(
+                      alignment: Alignment.topLeft,
+                     child:  Icon(Icons.phone),
+                    ),
+                    trailing: Text('6:40'),
+                  );
+                }),
           ]),
         )
     );
