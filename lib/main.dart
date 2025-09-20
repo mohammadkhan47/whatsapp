@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp/screens/calculator.dart';
 import 'package:whatsapp/screens/home_screen.dart';
 
 void main(){
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: CalculatorApp(),
       theme: ThemeData(
         primarySwatch: Colors.teal
       ),
