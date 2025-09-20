@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id  = 'home_screen';
@@ -9,6 +12,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  File? _capturedImage; // to hold captured image
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _openCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile != null) {
+      setState(() {
+        _capturedImage = File(pickedFile.path);
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -47,7 +62,15 @@ class _HomeScreenState extends State<HomeScreen> {
             ]),
           ),
           body: TabBarView(children: [
-            Text('Camera'),
+            Center(
+              child: _capturedImage == null
+                  ? ElevatedButton.icon(
+                onPressed: _openCamera,
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Open Camera"),
+              )
+                  : Image.file(_capturedImage!),
+            ),
             ListView.builder(
               itemCount: 100,
                 itemBuilder: (context, index){
@@ -61,7 +84,41 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }),
 
-            Text('Status'),
+            ListView.builder(
+                itemCount: 100,
+                itemBuilder: (context, index){
+                  if(index == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('new updates'),
+                          ListTile(
+                            leading: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: Colors.green,
+                                      width: 3
+                                  )
+                              ),
+                              child: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                    'https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg'),
+                              ),
+                            ),
+                            title: Text('john khan'),
+                            subtitle: Text('35m ago'),
+                            trailing: Text('6:40'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                  return null;
+                }),
             ListView.builder(
                 itemCount: 100,
                 itemBuilder: (context, index){
@@ -70,11 +127,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundImage: NetworkImage('https://images.pexels.com/photos/1040881/pexels-photo-1040881.jpeg'),
                     ),
                     title: Text('john khan'),
-                    subtitle: Align(
-                      alignment: Alignment.topLeft,
-                     child:  Icon(Icons.phone),
-                    ),
-                    trailing: Text('6:40'),
+                    subtitle: Text(index/ 2 == 0 ? 'you missed call' : 'you missed video call'),
+                    trailing: Icon(index/2 == 0? Icons.phone : Icons.video_call),
                   );
                 }),
           ]),
