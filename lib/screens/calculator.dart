@@ -63,6 +63,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
                                     },),
                                     MyButton(title: '/',color: Colors.orangeAccent,onpress: (){
                                       userInput += '/';
+                                      equalPress();
                                       setState(() {
 
                                       });
