@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 import 'package:whatsapp/constants.dart';
 
 import '../components/my_buttons.dart';
@@ -83,35 +84,95 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
                                 });
                               },),
-                              MyButton(title: '9',onpress: (){},),
-                              MyButton(title: '*',color: Colors.orangeAccent,onpress: (){},),
+                              MyButton(title: '9',onpress: (){
+                                userInput = userInput + '9';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '*',color: Colors.orangeAccent,onpress: (){
+                                userInput += '*';
+                                equalPress();
+                                setState(() {
+
+                                });
+
+
+                              },),
                             ],
                           ),
                           SizedBox(height: 15,),
                           Row(
                             children: [
-                              MyButton(title: '4',onpress: (){},),
-                              MyButton(title: '5',onpress: (){},),
-                              MyButton(title: '6',onpress: (){},),
-                              MyButton(title: '-',color: Colors.orangeAccent,onpress: (){},),
+                              MyButton(title: '4',onpress: (){
+                                userInput = userInput + '4';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '5',onpress: (){
+                                userInput = userInput + '5';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '6',onpress: (){
+                                userInput = userInput +'6';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '-',color: Colors.orangeAccent,onpress: (){
+                                userInput = userInput + '-';
+                              },),
                             ],
                           ),
                           SizedBox(height: 15,),
                           Row(
                             children: [
-                              MyButton(title: '1',onpress: (){},),
-                              MyButton(title: '2',onpress: (){},),
-                              MyButton(title: '3',onpress: (){},),
-                              MyButton(title: '+',color: Colors.orangeAccent,onpress: (){},),
+                              MyButton(title: '1',onpress: (){
+                                userInput = userInput + '1';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '2',onpress: (){
+                                userInput = userInput + '2';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '3',onpress: (){
+                                userInput = userInput + '3';
+                                setState(() {
+
+                                });
+                              },),
+                              MyButton(title: '+',color: Colors.orangeAccent,onpress: (){
+                                userInput = userInput + '+';
+                                setState(() {
+
+                                });
+                              },),
                             ],
                           ),
                           SizedBox(height: 15,),
                           Row(
                             children: [
-                              MyButton(title: '0',onpress: (){},),
+                              MyButton(title: '0',onpress: (){
+                                userInput = userInput + '0';
+                                setState(() {
+
+                                });
+                              },),
                               MyButton(title: '.',onpress: (){},),
                               MyButton(title: 'DEL',onpress: (){},),
-                              MyButton(title: '=',color: Colors.orangeAccent,onpress: (){},),
+                              MyButton(title: '=',color: Colors.orangeAccent,onpress: (){
+                                equalPress();
+                                setState(() {
+
+                                });
+                              },),
                             ],
                           ),
                         ],
@@ -128,6 +189,19 @@ class _CalculatorAppState extends State<CalculatorApp> {
             )
       ),
     );
+  }
+  void equalPress(){
+    Parser parser = Parser();
+    //parser take string like 12+8 and convert to expression tree
+    Expression expression = parser.parse(userInput);
+    //spression object is like tree = - * / which will use first dmas rule
+    ContextModel contextModel = ContextModel();
+    //evaluate expression mean 5+2 =7 etc
+    double eval = expression.evaluate(EvaluationType.REAL, contextModel);
+    // this will calculate numeric result
+    // contextModel gives valur in expressions
+    answer = eval.toString();
+    //result will give to us in double
   }
 }
 
