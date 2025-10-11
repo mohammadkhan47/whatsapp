@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:whatsapp/constants.dart';
 
 import '../components/my_buttons.dart';
 
@@ -195,12 +194,12 @@ class _CalculatorAppState extends State<CalculatorApp> {
     Parser parser = Parser();
     //parser take string like 12+8 and convert to expression tree
     Expression expression = parser.parse(userInput);
-    //spression object is like tree = - * / which will use first dmas rule
+    //expression object is like tree = - * / which will use first dmas rule
     ContextModel contextModel = ContextModel();
     //evaluate expression mean 5+2 =7 etc
     double eval = expression.evaluate(EvaluationType.REAL, contextModel);
     // this will calculate numeric result
-    // contextModel gives valur in expressions
+    // contextModel gives value in expressions
     answer = eval.toString();
     //result will give to us in double
   }
